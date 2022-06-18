@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cardview_light_background"
+    android:orientation="vertical">
+
+    <Toolbar
+
+
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@color/teal_200"
+        android:titleTextColor="@color/black">
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="错误日志"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </Toolbar>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/error_view_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="错误日志"
+            android:textColor="@color/red1"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </ScrollView>
+</LinearLayout>
