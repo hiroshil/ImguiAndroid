@@ -88,7 +88,8 @@ JNIEXPORT jobjectArray JNICALL
 Java_com_example_imguitestmenu_GLES3JNILib_GetImguiwinsize(JNIEnv *env, jclass clazz) {
     // TODO: implement GetImguiwinsize()
     jobjectArray obj;
-    cal=env->FindClass("com/example/imguitestmenu/CallData");
+
+    cal=env->FindClass("com/example/imguitestmenu/CallData");//有时候会获取失败
     //jfloatArray newFloatArray = env->NewFloatArray(4);
     if (EGL != nullptr) {
             if (EGL->WinList.Size!=0){

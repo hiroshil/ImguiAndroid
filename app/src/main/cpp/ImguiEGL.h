@@ -6,23 +6,6 @@
 #define IMGUIMENU_IMGUIEGL_H
 
 #include "pch.h"
-class AItemData {
-public:
-    const char *Name;
-    ImColor    *Color;
-
-    AItemData(const char *Name, ImColor *Color) {
-        this->Name  = Name;
-        this->Color = Color;
-    };
-
-    AItemData(char *Name, ImColor *Color) {
-        this->Name  = Name;
-        this->Color = Color;
-    };
-
-};
-
 
 class ImguiEGL { ;
     std::condition_variable cond;
@@ -64,8 +47,6 @@ class ImguiEGL { ;
     //Imgui
     int initImgui();
 
-
-
     void imguiMainWinStart();
 
     void imguiMainWinEnd();
@@ -78,31 +59,9 @@ class ImguiEGL { ;
     bool isLogin = false;
 
 
-
-
-
-    //绘制数据
-
-    int      pos = 0;
+   // int      pos = 0;
     ImFont   *imFont;
-
-    ImVec4  clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
-    int Coloridx                    = 0;
-
-
-
-    size_t           j, it, v, d;
-    int              playerCount;
-    int              botCount;
-    char             extra[100];
-    float            arry[20];
-    float            BoneThickness  = 2.0f;
-    float            slineThickness = 2.0f;
-    float            boxThickness   = 2.0f;
     string           SaveDir;
-    float            FrameHeight;
-    struct logindata *jjydata;
 public:
     ImGuiIO      *io;
     ImGuiStyle   *style;
@@ -114,7 +73,6 @@ public:
     int          surfaceHighHalf    = 0;
     int          StatusBarHeight    = 0;
     ImVector<ImGuiWindow*>       WinList;
-
 
     ImguiEGL();
 
@@ -129,8 +87,6 @@ public:
 
     void onSurfaceDestroy();
     void ShowStyleEditor(ImGuiStyle* ref);
-
-
 
     void setSaveSettingsdir(string &dir);
 

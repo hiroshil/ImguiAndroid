@@ -381,7 +381,7 @@ void ImguiAndroidInput::InputTouchEvent(int event_get_action, float x, float y) 
 //		LOGE("imgui无焦点");
     }
    // LOGE("触发状态:%s",io->WantCaptureMouseUnlessPopupClose? "触发":"没触发");
-    LOGE("触发状态1:%s",g_window->HasCloseButton? "触发":"没触发");
+   // LOGE("触发状态1:%s",g_window->HasCloseButton? "触发":"没触发");
 
     if (io->WantTextInput) {
 
