@@ -18,7 +18,7 @@ adb shell settings put global block_untrusted_touches 0
 
 #### 使用说明
 
-1.  xxxx
+1.  目前没解决的bug,有时候输入法要么弹不出来，要么隐藏后又自动弹出
 2.  xxxx
 3.  xxxx
 
@@ -29,4 +29,5 @@ adb shell settings put global block_untrusted_touches 0
 3.  提交代码
 4.  新建 Pull Request
 
-![](C:/Users/admin/Documents/Tencent Files/1486609722/FileRecv/MobileFile/Screenshot_2022-06-19-10-38-02-42_149003a2d400f6a.jpg)
+#### 演示图
+
