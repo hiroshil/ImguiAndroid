@@ -95,6 +95,5 @@ public:
     ~ImguiEGL() {
     }
 
-    void ListItemPage_4();
 };
 #endif

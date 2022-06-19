@@ -96,7 +96,7 @@ Java_com_example_imguitestmenu_GLES3JNILib_GetImguiwinsize(JNIEnv *env, jclass c
                 if(cal==NULL){
                     return NULL;
                 }
-                obj=env->NewObjectArray(EGL->WinList.Size,cal,NULL);
+                obj=env->NewObjectArray(EGL->WinList.Size,cal,NULL);//创建对象列表
                 //LOGE("窗口数据 W:%f H:%f",EGL->g_window->Size.x,EGL->g_window->Size.y);
                 int i=0;
                 for (ImGuiWindow *win:EGL->WinList) {

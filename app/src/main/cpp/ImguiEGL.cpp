@@ -85,10 +85,12 @@ int ImguiEGL::initImgui() {
     font_cfg.FontDataOwnedByAtlas = false;
     imFont = io->Fonts->AddFontFromMemoryTTF((void *) OPPOSans_H, OPPOSans_H_size, 32.0f, &font_cfg, io->Fonts->GetGlyphRangesChineseFull());
     io->MouseDoubleClickTime = 0.0001f;
+
     //UI窗体风格
     g = ImGui::GetCurrentContext();
     style = &ImGui::GetStyle();
-    style->ScaleAllSizes(3.0f);//缩放尺寸
+    style->ScaleAllSizes(4.0f);//缩放尺寸
+   // ImGui::SetWindowFontScale(150.0f);
 //    imguiStyleLoad("myStyle");
 
 
