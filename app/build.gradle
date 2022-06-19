@@ -29,6 +29,7 @@ android {
         ndk{
             //区别在占用空间大小
             abiFilters 'arm64-v8a','x86'
+           // abiFilters "armeabi", "armeabi-v7a", "x86" ,'arm64-v8a' //输出指定三种abi体系结构下的so库。
             //abiFilters 'arm64-v8a'
         }
         signingConfig signingConfigs.release
@@ -62,7 +63,7 @@ android {
         viewBinding true
     }
     ndkVersion '21.4.7075529'
-    buildToolsVersion '28.0.3'
+    buildToolsVersion '30.0.3'
 }
 
 dependencies {

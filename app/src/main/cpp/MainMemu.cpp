@@ -122,9 +122,6 @@ void ImguiEGL::MainView(){
 
 
 
-
-
-
             if(v1){
             ImGui::Begin("imgui模板1", &v1 );
             ImGui::SetWindowSize({700, 550}, ImGuiCond_FirstUseEver);

@@ -20,7 +20,7 @@
 //#include "../timer.h"
 //#include "myStruct.h"
 //using namespace std;
-#include "ImGui/OPPOSans-H.h"
+#include "OPPOSans-H.h"
 
 #include <random>
 #include "android/native_window_jni.h"
