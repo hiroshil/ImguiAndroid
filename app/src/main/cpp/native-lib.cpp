@@ -96,7 +96,6 @@ Java_com_example_imguitestmenu_GLES3JNILib_GetImguiwinsize(JNIEnv *env, jclass c
                     return NULL;
                 }
                 obj=env->NewObjectArray(EGL->WinList.Size,cal,NULL);
-
                 //LOGE("窗口数据 W:%f H:%f",EGL->g_window->Size.x,EGL->g_window->Size.y);
                 int i=0;
                 for (ImGuiWindow *win:EGL->WinList) {
@@ -124,17 +123,21 @@ Java_com_example_imguitestmenu_GLES3JNILib_GetImguiwinsize(JNIEnv *env, jclass c
 //数据包装
 jobject Box(JNIEnv *env,int Wid,char* Winame,float f[],bool at){
     //LOGE("包装数据 W:%f H:%f",f[2],f[3]);
-    jclass cl=env->FindClass("com/example/imguitestmenu/CallData");//找到数据类
-    if (cl==NULL)return NULL;
+   // if (cal==NULL){
+        //jclass cl=env->FindClass("com/example/imguitestmenu/CallData");//找到数据类
+       // jclass cal=env->FindClass("com/example/imguitestmenu/CallData");//找到数据类
+   // }
+
+   // if (cal==NULL)return NULL;
     jfieldID id,name,X,Y,X1,Y1,Act;
-    id=env->GetFieldID(cl,"ID","I");
-    name=env->GetFieldID(cl,"WinName","Ljava/lang/String;");
-    X=env->GetFieldID(cl,"X","F");
-    Y=env->GetFieldID(cl,"Y","F");
-    X1=env->GetFieldID(cl,"X1","F");
-    Y1=env->GetFieldID(cl,"Y1","F");
-    Act=env->GetFieldID(cl,"Action","Z");
-    jobject daclass=env->AllocObject(cl);
+    id=env->GetFieldID(cal,"ID","I");
+    name=env->GetFieldID(cal,"WinName","Ljava/lang/String;");
+    X=env->GetFieldID(cal,"X","F");
+    Y=env->GetFieldID(cal,"Y","F");
+    X1=env->GetFieldID(cal,"X1","F");
+    Y1=env->GetFieldID(cal,"Y1","F");
+    Act=env->GetFieldID(cal,"Action","Z");
+    jobject daclass=env->AllocObject(cal);
     env->SetIntField(daclass,id,Wid);
     env->SetObjectField(daclass, name, env->NewStringUTF(Winame));
     env->SetFloatField(daclass,X,f[0]);

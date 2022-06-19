@@ -74,12 +74,13 @@ int ImguiEGL::initImgui() {
     io->IniSavingRate = 10.0f;
     string SaveFile = this->SaveDir;
     SaveFile += "/save.ini";
-    LOGE("保存配置文件的位置:%s",SaveFile.c_str());
+   // LOGE("保存配置文件的位置:%s",SaveFile.c_str());
     io->IniFilename = SaveFile.c_str();
     io->ConfigWindowsMoveFromTitleBarOnly = true;
     //ImGui::LoadIniSettingsFromDisk(SaveFile.c_str());
     ImGui_ImplAndroid_Init(this->SurfaceWin);
-    ImGui_ImplOpenGL3_Init("#version 100");
+   // ImGui_ImplOpenGL3_Init("#version 100");
+    ImGui_ImplOpenGL3_Init("#version 300 es");
     ImFontConfig font_cfg;
     font_cfg.FontDataOwnedByAtlas = false;
     imFont = io->Fonts->AddFontFromMemoryTTF((void *) OPPOSans_H, OPPOSans_H_size, 32.0f, &font_cfg, io->Fonts->GetGlyphRangesChineseFull());
@@ -89,11 +90,7 @@ int ImguiEGL::initImgui() {
     style = &ImGui::GetStyle();
     style->ScaleAllSizes(3.0f);//缩放尺寸
 //    imguiStyleLoad("myStyle");
-    //style->ItemSpacing.x  = 20;
-    //style->ItemSpacing.y  = 13;
-    //style->FramePadding.x = 20;
-    //style->FramePadding.y = 13;
-   // style->ResizeGripSize = 45.0f;
+
 
    //自动读取主题
     string LoadFile = this->SaveDir;
@@ -140,11 +137,11 @@ void ImguiEGL::onSurfaceDestroy() {
 }
 
 void ImguiEGL::EglThread() {
-    LOGE("EglThreadstrat");
+    //LOGE("EglThreadstrat");
     this->initEgl();
-    LOGE("Egl初始化完成");
+   // LOGE("Egl初始化完成");
     this->initImgui();
-    LOGE("imgui初始化完成");
+    //LOGE("imgui初始化完成");
 
     ThreadIo = true;
    // AutoFPS.setAffinity();
@@ -152,7 +149,7 @@ void ImguiEGL::EglThread() {
     input->initImguiIo(io);
     input->setImguiContext(g);
     input->setwin(this->g_window);
-    LOGE("surfaceWidth=%d,surfaceHigh=%d", this->surfaceWidth, this->surfaceHigh);
+   // LOGE("surfaceWidth=%d,surfaceHigh=%d", this->surfaceWidth, this->surfaceHigh);
     for (;;) {
         if (this->isChage) {
             glViewport(0, 0, this->surfaceWidth, this->surfaceHigh);

@@ -169,6 +169,7 @@ public class EventClass {
             lookView.setFocusableInTouchMode(true);
             //        请求焦点
             boolean ck = lookView.requestFocus();
+            //有时候显示不了，在加一个
             showSoftInput();//增加成功率
             Log.e("NDK","requestFocus:"+ck);
             //        弹出键盘
@@ -210,6 +211,7 @@ public class EventClass {
             lookView.setFocusableInTouchMode(false);
             //       清除焦点
             lookView.clearFocus();
+            //有时候隐藏不掉，在加一个
             hideSoftInput();
             //       隐藏悬浮窗
             //重新创建一次 否则有时候输入法会重复弹出
