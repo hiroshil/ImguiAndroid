@@ -30,4 +30,4 @@ adb shell settings put global block_untrusted_touches 0
 4.  新建 Pull Request
 
 #### 演示图
-![](https://gitee.com/alexmmc/ImguiAndroid/Demo.jpg)
+![](https://gitee.com/alexmmc/ImguiAndroid/raw/master/Demo.jpg)
