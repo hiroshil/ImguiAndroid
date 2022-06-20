@@ -31,3 +31,5 @@ adb shell settings put global block_untrusted_touches 0
 
 #### 演示图
 ![](https://gitee.com/alexmmc/ImguiAndroid/raw/master/Demo.jpg)
+<img src="https://gitee.com/alexmmc/ImguiAndroid/raw/master/Demo.jpg" width="600" height="400"
+alt="演示"/><br/>
