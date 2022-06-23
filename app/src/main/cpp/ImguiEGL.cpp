@@ -76,7 +76,7 @@ int ImguiEGL::initImgui() {
     SaveFile += "/save.ini";
    // LOGE("保存配置文件的位置:%s",SaveFile.c_str());
     io->IniFilename = SaveFile.c_str();
-    io->ConfigWindowsMoveFromTitleBarOnly = true;
+   // io->ConfigWindowsMoveFromTitleBarOnly = true;
     //ImGui::LoadIniSettingsFromDisk(SaveFile.c_str());
     ImGui_ImplAndroid_Init(this->SurfaceWin);
    // ImGui_ImplOpenGL3_Init("#version 100");

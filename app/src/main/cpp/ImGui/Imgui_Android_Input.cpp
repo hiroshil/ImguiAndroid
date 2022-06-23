@@ -430,7 +430,7 @@ void ImguiAndroidInput::InputTouchEvent(int event_get_action, float x, float y) 
             ScrollYMAX = 0.0f;
             TOUCH_TIME = 0.0f;
             upio       = false;
-            Scrollio   = false;
+           // Scrollio   = false;
             runScroll  = false;
             io->isMouseMove = false;
             TOUCH_TIMER.start();
@@ -456,10 +456,11 @@ void ImguiAndroidInput::InputTouchEvent(int event_get_action, float x, float y) 
             io->MousePos.x = x;
             io->MousePos.y                          = y;
             loopRun = false;
-            if (y > g_window->TitleBarHeight() && abs(DOWN_x - x) > 3.0f  ||  abs(DOWN_y - y) > 3.0f ){
+            io->isMouseMove = true;
+           /* if (y > g_window->TitleBarHeight() && abs(DOWN_x - x) > 3.0f  ||  abs(DOWN_y - y) > 3.0f ){
                 io->isMouseMove = true;
-                Scrollio = true;
-            }
+               // Scrollio = true;
+            }*/
 
 //			LOGE("滑动");
             break;
