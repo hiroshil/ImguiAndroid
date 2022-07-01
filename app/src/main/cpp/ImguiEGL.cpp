@@ -152,7 +152,7 @@ void ImguiEGL::EglThread() {
     input->setImguiContext(g);
     input->setwin(this->g_window);
    // LOGE("surfaceWidth=%d,surfaceHigh=%d", this->surfaceWidth, this->surfaceHigh);
-    for (;;) {
+    while (true) {
    // while (true) {
         if (this->isChage) {
             glViewport(0, 0, this->surfaceWidth, this->surfaceHigh);
@@ -167,21 +167,16 @@ void ImguiEGL::EglThread() {
         this->clearBuffers();
         imguiMainWinStart();
 
+        //菜单
         MainView();
-
-
-        /*for (int i = 0; i <ImGui::GetCurrentContext()->WindowsActiveCount ; ++i) {
-            //LOGE("第%d个窗口id:%d",i,ImGui::GetCurrentContext()->Windows[i]->ID);
-           // ImGui::GetCurrentContext()->Windows[i]->StateStorage.
-        }*///ImGui::GetCurrentContext()->Windows
 
         imguiMainWinEnd();
         this->swapBuffers();
         WinList=ImGui::GetCurrentContext()->Windows;
         input->fps = this->FPS;
         //占用高，加个延迟缓和一下
-
-        usleep(35000);
+       // sleep(0.1);
+        usleep(25000);
     }
 }
 int ImguiEGL::swapBuffers() {
