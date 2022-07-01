@@ -111,6 +111,7 @@ public class FloatService extends Service {
         // 从布局文件，生成悬浮窗
         manager.getDefaultDisplay().getRealMetrics(dm);
         containerView = new ContainerView(Instance);
+
         containerView.setZOrderOnTop(true);
         containerView.getHolder().setFormat(PixelFormat.TRANSPARENT);
         Log.e("NDK-JAVA", "开启绘制窗口");

@@ -410,22 +410,3 @@ void ImguiEGL::ShowStyleEditor(ImGuiStyle* ref)
 
 }
 
-char *trim(char *str) {
-    //这里是指针在跑
-    char *point = str;//组成新的指针
-    while (*point != '\0')//让指针往后跑，跑到最后一个空字符的位置停下来
-    {
-        point++;//结束时指针跑到最后一元素哪里了
-    }
-    point--;//后退一位，以除去最后一位的那个空字符
-    while (point >= str && *point == ' ')//往回跑以除去尾部的空格字符，没有空格了就停下来
-    {
-        *point = '\0';
-        point--;
-    }//此时除去了尾部的空格字符
-    point = str;//重新定义point回到第一位从头部开始除去空格字符
-    while (*point == ' ') {
-        point++;//结束时的位置即为新的数组首
-    }
-    return point;
-}

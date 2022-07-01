@@ -153,6 +153,7 @@ void ImguiEGL::EglThread() {
     input->setwin(this->g_window);
    // LOGE("surfaceWidth=%d,surfaceHigh=%d", this->surfaceWidth, this->surfaceHigh);
     for (;;) {
+   // while (true) {
         if (this->isChage) {
             glViewport(0, 0, this->surfaceWidth, this->surfaceHigh);
             this->isChage = false;
@@ -178,6 +179,9 @@ void ImguiEGL::EglThread() {
         this->swapBuffers();
         WinList=ImGui::GetCurrentContext()->Windows;
         input->fps = this->FPS;
+        //占用高，加个延迟缓和一下
+
+        usleep(35000);
     }
 }
 int ImguiEGL::swapBuffers() {

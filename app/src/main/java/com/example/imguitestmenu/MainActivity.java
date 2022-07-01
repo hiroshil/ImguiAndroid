@@ -17,7 +17,7 @@ import com.example.imguitestmenu.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Used to load the 'imguitestmenu' library on application startup.
+    // Used to load the 'imguitestmenu' library on application startup.,
     /*----------------------------------------------*/
     /*----------------------------------------------*/
     /*---------------请编译成release版本--------------*/

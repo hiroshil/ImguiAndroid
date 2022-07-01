@@ -34,6 +34,7 @@ public class ContainerView extends SurfaceView implements SurfaceHolder.Callback
         EventClass.Init(context);
         orientation = new Orientation(context);
         //manager = (InputMethodManager) App.GetApp().getSystemService(Context.INPUT_METHOD_SERVICE);
+
         updateTouchWinSize();
 
     }

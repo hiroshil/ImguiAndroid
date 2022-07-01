@@ -146,6 +146,7 @@ jobject Box(JNIEnv *env,int Wid,char* Winame,float f[],bool at){
     env->SetFloatField(daclass,X1,f[2]);
     env->SetFloatField(daclass,Y1,f[3]);
     env->SetBooleanField(daclass,Act,at);
+
     return daclass;
 }
 
