@@ -156,82 +156,82 @@ int32_t ImGui_ImplAndroid_HandleInputEvent(AInputEvent* input_event)
     int32_t event_type = AInputEvent_getType(input_event);
     switch (event_type)
     {
-    case AINPUT_EVENT_TYPE_KEY:
-    {
-        int32_t event_key_code = AKeyEvent_getKeyCode(input_event);
-        int32_t event_scan_code = AKeyEvent_getScanCode(input_event);
-        int32_t event_action = AKeyEvent_getAction(input_event);
-        int32_t event_meta_state = AKeyEvent_getMetaState(input_event);
-
-        io.AddKeyEvent(ImGuiKey_ModCtrl,  (event_meta_state & AMETA_CTRL_ON)  != 0);
-        io.AddKeyEvent(ImGuiKey_ModShift, (event_meta_state & AMETA_SHIFT_ON) != 0);
-        io.AddKeyEvent(ImGuiKey_ModAlt,   (event_meta_state & AMETA_ALT_ON)   != 0);
-        io.AddKeyEvent(ImGuiKey_ModSuper, (event_meta_state & AMETA_META_ON)  != 0);
-
-        switch (event_action)
+        case AINPUT_EVENT_TYPE_KEY:
         {
-        // FIXME: AKEY_EVENT_ACTION_DOWN and AKEY_EVENT_ACTION_UP occur at once as soon as a touch pointer
-        // goes up from a key. We use a simple key event queue/ and process one event per key per frame in
-        // ImGui_ImplAndroid_NewFrame()...or consider using IO queue, if suitable: https://github.com/ocornut/imgui/issues/2787
-        case AKEY_EVENT_ACTION_DOWN:
-        case AKEY_EVENT_ACTION_UP:
-        {
-            ImGuiKey key = ImGui_ImplAndroid_KeyCodeToImGuiKey(event_key_code);
-            if (key != ImGuiKey_None && (event_action == AKEY_EVENT_ACTION_DOWN || event_action == AKEY_EVENT_ACTION_UP))
+            int32_t event_key_code = AKeyEvent_getKeyCode(input_event);
+            int32_t event_scan_code = AKeyEvent_getScanCode(input_event);
+            int32_t event_action = AKeyEvent_getAction(input_event);
+            int32_t event_meta_state = AKeyEvent_getMetaState(input_event);
+
+            io.AddKeyEvent(ImGuiKey_ModCtrl,  (event_meta_state & AMETA_CTRL_ON)  != 0);
+            io.AddKeyEvent(ImGuiKey_ModShift, (event_meta_state & AMETA_SHIFT_ON) != 0);
+            io.AddKeyEvent(ImGuiKey_ModAlt,   (event_meta_state & AMETA_ALT_ON)   != 0);
+            io.AddKeyEvent(ImGuiKey_ModSuper, (event_meta_state & AMETA_META_ON)  != 0);
+
+            switch (event_action)
             {
-                io.AddKeyEvent(key, event_action == AKEY_EVENT_ACTION_DOWN);
-                io.SetKeyEventNativeData(key, event_key_code, event_scan_code);
-            }
+                // FIXME: AKEY_EVENT_ACTION_DOWN and AKEY_EVENT_ACTION_UP occur at once as soon as a touch pointer
+                // goes up from a key. We use a simple key event queue/ and process one event per key per frame in
+                // ImGui_ImplAndroid_NewFrame()...or consider using IO queue, if suitable: https://github.com/ocornut/imgui/issues/2787
+                case AKEY_EVENT_ACTION_DOWN:
+                case AKEY_EVENT_ACTION_UP:
+                {
+                    ImGuiKey key = ImGui_ImplAndroid_KeyCodeToImGuiKey(event_key_code);
+                    if (key != ImGuiKey_None && (event_action == AKEY_EVENT_ACTION_DOWN || event_action == AKEY_EVENT_ACTION_UP))
+                    {
+                        io.AddKeyEvent(key, event_action == AKEY_EVENT_ACTION_DOWN);
+                        io.SetKeyEventNativeData(key, event_key_code, event_scan_code);
+                    }
 
+                    break;
+                }
+                default:
+                    break;
+            }
             break;
         }
+        case AINPUT_EVENT_TYPE_MOTION:
+        {
+            int32_t event_action = AMotionEvent_getAction(input_event);
+            int32_t event_pointer_index = (event_action & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT;
+            event_action &= AMOTION_EVENT_ACTION_MASK;
+            switch (event_action)
+            {
+                case AMOTION_EVENT_ACTION_DOWN:
+                case AMOTION_EVENT_ACTION_UP:
+                    // Physical mouse buttons (and probably other physical devices) also invoke the actions AMOTION_EVENT_ACTION_DOWN/_UP,
+                    // but we have to process them separately to identify the actual button pressed. This is done below via
+                    // AMOTION_EVENT_ACTION_BUTTON_PRESS/_RELEASE. Here, we only process "FINGER" input (and "UNKNOWN", as a fallback).
+                    if((AMotionEvent_getToolType(input_event, event_pointer_index) == AMOTION_EVENT_TOOL_TYPE_FINGER)
+                       || (AMotionEvent_getToolType(input_event, event_pointer_index) == AMOTION_EVENT_TOOL_TYPE_UNKNOWN))
+                    {
+                        io.AddMousePosEvent(AMotionEvent_getX(input_event, event_pointer_index), AMotionEvent_getY(input_event, event_pointer_index));
+                        io.AddMouseButtonEvent(0, event_action == AMOTION_EVENT_ACTION_DOWN);
+                    }
+                    break;
+                case AMOTION_EVENT_ACTION_BUTTON_PRESS:
+                case AMOTION_EVENT_ACTION_BUTTON_RELEASE:
+                {
+                    int32_t button_state = AMotionEvent_getButtonState(input_event);
+                    io.AddMouseButtonEvent(0, (button_state & AMOTION_EVENT_BUTTON_PRIMARY) != 0);
+                    io.AddMouseButtonEvent(1, (button_state & AMOTION_EVENT_BUTTON_SECONDARY) != 0);
+                    io.AddMouseButtonEvent(2, (button_state & AMOTION_EVENT_BUTTON_TERTIARY) != 0);
+                }
+                    break;
+                case AMOTION_EVENT_ACTION_HOVER_MOVE: // Hovering: Tool moves while NOT pressed (such as a physical mouse)
+                case AMOTION_EVENT_ACTION_MOVE:       // Touch pointer moves while DOWN
+                    io.AddMousePosEvent(AMotionEvent_getX(input_event, event_pointer_index), AMotionEvent_getY(input_event, event_pointer_index));
+                    break;
+                case AMOTION_EVENT_ACTION_SCROLL:
+                    io.AddMouseWheelEvent(AMotionEvent_getAxisValue(input_event, AMOTION_EVENT_AXIS_HSCROLL, event_pointer_index), AMotionEvent_getAxisValue(input_event, AMOTION_EVENT_AXIS_VSCROLL, event_pointer_index));
+                    break;
+                default:
+                    break;
+            }
+        }
+            return 1;
         default:
             break;
-        }
-        break;
-    }
-    case AINPUT_EVENT_TYPE_MOTION:
-    {
-        int32_t event_action = AMotionEvent_getAction(input_event);
-        int32_t event_pointer_index = (event_action & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT;
-        event_action &= AMOTION_EVENT_ACTION_MASK;
-        switch (event_action)
-        {
-        case AMOTION_EVENT_ACTION_DOWN:
-        case AMOTION_EVENT_ACTION_UP:
-            // Physical mouse buttons (and probably other physical devices) also invoke the actions AMOTION_EVENT_ACTION_DOWN/_UP,
-            // but we have to process them separately to identify the actual button pressed. This is done below via
-            // AMOTION_EVENT_ACTION_BUTTON_PRESS/_RELEASE. Here, we only process "FINGER" input (and "UNKNOWN", as a fallback).
-            if((AMotionEvent_getToolType(input_event, event_pointer_index) == AMOTION_EVENT_TOOL_TYPE_FINGER)
-            || (AMotionEvent_getToolType(input_event, event_pointer_index) == AMOTION_EVENT_TOOL_TYPE_UNKNOWN))
-            {
-                io.AddMousePosEvent(AMotionEvent_getX(input_event, event_pointer_index), AMotionEvent_getY(input_event, event_pointer_index));
-                io.AddMouseButtonEvent(0, event_action == AMOTION_EVENT_ACTION_DOWN);
-            }
-            break;
-        case AMOTION_EVENT_ACTION_BUTTON_PRESS:
-        case AMOTION_EVENT_ACTION_BUTTON_RELEASE:
-            {
-                int32_t button_state = AMotionEvent_getButtonState(input_event);
-                io.AddMouseButtonEvent(0, (button_state & AMOTION_EVENT_BUTTON_PRIMARY) != 0);
-                io.AddMouseButtonEvent(1, (button_state & AMOTION_EVENT_BUTTON_SECONDARY) != 0);
-                io.AddMouseButtonEvent(2, (button_state & AMOTION_EVENT_BUTTON_TERTIARY) != 0);
-            }
-            break;
-        case AMOTION_EVENT_ACTION_HOVER_MOVE: // Hovering: Tool moves while NOT pressed (such as a physical mouse)
-        case AMOTION_EVENT_ACTION_MOVE:       // Touch pointer moves while DOWN
-            io.AddMousePosEvent(AMotionEvent_getX(input_event, event_pointer_index), AMotionEvent_getY(input_event, event_pointer_index));
-            break;
-        case AMOTION_EVENT_ACTION_SCROLL:
-            io.AddMouseWheelEvent(AMotionEvent_getAxisValue(input_event, AMOTION_EVENT_AXIS_HSCROLL, event_pointer_index), AMotionEvent_getAxisValue(input_event, AMOTION_EVENT_AXIS_VSCROLL, event_pointer_index));
-            break;
-        default:
-            break;
-        }
-    }
-        return 1;
-    default:
-        break;
     }
 
     return 0;
